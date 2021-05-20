@@ -200,7 +200,7 @@ class MaxwellPubsubProducerWorker
       throws Exception {
     String message = r.toJSON(outputConfig);
     ByteString data = ByteString.copyFromUtf8(message);
-    PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
+    PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).putAttributes("table", r.getTable()).putAttributes("database", r.getDatabase()).build();
 
     if ( r instanceof DDLMap ) {
 	  ApiFuture<String> apiFuture = ddlPubsub.publish(pubsubMessage);
